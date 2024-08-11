@@ -1,0 +1,264 @@
+{
+	"info": {
+		"_postman_id": "f7e18cae-57f4-4ebe-8609-be4ed40aab5d",
+		"name": "Day 01: API client",
+		"description": "## Instructions for Day 1: API client\n\n1. **Get the challenge:** Fork the parent collection to your own **Public Workspace**.\n2. **Read the documentation:** In your fork, select the first folder `API client`. Expand the context bar on the right to follow the instructions in the collection documentation. If you find it bothersome to navigate between the documentation while working in a different area of Postman, remember that you can open a new tab to keep your place in the documentation, and then switch between tabs.\n3. **Submit your solution:** Select the second folder `Submit your solution` and follow the instructions in the documentation to validate your solution.\n    \n\n## Learning Objectives\n\n- Import data into Postman\n- Send and retrieve data from an API\n- Inspect API requests and responses\n- Use collection variables to store data\n    \n\n## Concepts covered\n\n- [Fork a collection](https://learning.postman.com/docs/collaborating-in-postman/version-control-for-collections/#forking-a-collection)\n- [View documentation](https://learning.postman.com/docs/publishing-your-api/viewing-documentation/)\n- [Send a request](https://learning.postman.com/docs/sending-requests/requests/)\n- [Use variables](https://learning.postman.com/docs/sending-requests/variables/)\n    \n\n## Additional resources\n\n- [Navigating the Postman app interface](https://youtu.be/Kr8OVXjzw4k) video\n- [Intro to APIs](https://youtu.be/iFMLyMgCUTs) video series\n- [Postman API](https://learning.postman.com/docs/developer/intro-api/) docs\n- [Initial vs Current Values for Variables](https://youtu.be/I6vClap0ajU) video",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13924255",
+		"_collection_link": "https://www.postman.com/gold-escape-737985/workspace/alireza-kasiri/collection/13924255-f7e18cae-57f4-4ebe-8609-be4ed40aab5d?action=share&source=collection_link&creator=13924255"
+	},
+	"item": [
+		{
+			"name": "API client",
+			"item": [
+				{
+					"name": "echo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"payload\": \"new payload\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://postman-echo.com/post",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"post"
+							]
+						},
+						"description": "Generated from cURL: curl --location --request POST 'https://postman-echo.com/post' \\\r\n--header 'Content-Type: application/json' \\\r\n--data-raw '{\r\n    \"payload\": \"hello world!\"\r\n}'"
+					},
+					"response": []
+				}
+			],
+			"description": "It's time to work on your first challenge.\n\nWhen working with HTTP APIs, a client sends a request, and the server returns a response. Let's learn more about Postman as an API client using [Postman's Echo API](https://www.postman.com/postman/workspace/published-postman-templates/documentation/631643-f695cab7-6878-eb55-7943-ad88e1ccfd65?ctx=documentation) that echoes back data provided by the client.\n\n1. **Import the request:** [Import the following data into Postman](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/#importing-data-into-postman) as `Raw text`. Then save the request to this collection under the `API client` folder. Name the request `echo`.\n\n```\ncurl --location --request POST 'https://postman-echo.com/post' \\\n--header 'Content-Type: application/json' \\\n--data-raw '{\n    \"payload\": \"hello world!\"\n}'\n```\n1.  **Review the request:** Notice the different parts of this API request.\n    *   HTTP request method - `POST` to send new data to an API\n    *   Request URL - `https://postman-echo.com/post`\n    *   Request body - JSON object under the **Body** tab  \n2.  **Send the request**: **Send** the request, and look at the response on the bottom.\n    *   HTTP status code\n    *   Response time\n    *   Response size\n    *   Response body\n3.  **Inspect the response:** Under the **Pretty** view of the response body, inspect the JSON data object returned from the server. Inspect the response headers returned from the server.\n1. **Update the request:** Update the value of the `payload` property in the request body to something else besides `hello world!`.\n    \n\nSave your changes, and move on to the next folder in this collection to submit your solution. Today's challenge is only half completed!"
+		},
+		{
+			"name": "Submit your solution",
+			"item": [
+				{
+					"name": "submit collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// counter for passed tests",
+									"let pass = 0",
+									"let totalToPass = 4",
+									"",
+									"let collection = pm.response.json().collection",
+									"",
+									"pm.test(\"If you have any failures, review the failed test results or ask for support in the community forum. Remember to save your changes if you update the collection.\", () => {",
+									"    pm.expect(true);",
+									"    pass += 1",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"    pass += 1",
+									"});",
+									"",
+									"pm.test(\"Correct collection returned\", () => {",
+									"    pm.expect(collection.info.name).equals(\"Day 01: API client\")",
+									"    pass += 1",
+									"})",
+									"",
+									"let folder = collection.item.find(fol => {return fol.name === \"API client\"})",
+									"",
+									"pm.test(\"Request body updated\", () => {",
+									"    let request = folder.item.find(req => {return req.name === \"echo\"})",
+									"    pm.expect(request.request.body.raw, 'check payload').does.not.include(\"hello world!\")",
+									"    pass += 1",
+									"})",
+									"",
+									"// visualization for test results",
+									"let template",
+									"if (pass == totalToPass) {",
+									"    template = `🍪 passing!",
+									"        <br />",
+									"        <img src=\"https://media1.giphy.com/media/Dkf37ayTUExQ4/giphy.gif?cid=ecf05e4742btni80eyov8aqcpjhvc4hyxc36covy0r33xvy0&rid=giphy.gif&ct=g\" />",
+									"    `",
+									"} else {",
+									"    template = `🙅 please try again",
+									"        <br />",
+									"        <img src=\"https://media3.giphy.com/media/fqst7AVqF6AVLlYklE/giphy.gif?cid=ecf05e47mv96rgygl6w4fenzomwqqeh17p5pvcsgenuyxsbo&rid=giphy.gif&ct=g\" />",
+									"    `",
+									"}",
+									"pm.visualizer.set(template)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{vault:postman_api_key}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.getpostman.com/collections/{{collection_uid}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"getpostman",
+								"com"
+							],
+							"path": [
+								"collections",
+								"{{collection_uid}}"
+							]
+						},
+						"description": "It's time to check your collection.\n\n1. **Get the collection ID:** Select the collection in the sidebar. Then in the context bar to the right, select the `Info` icon and copy the collection `ID`. Make sure you're getting the `ID` for the collection, and not this request.\n    \n2. **Update the request URL:** Update the `collection_uid` in the request URL with the collection `ID` from the previous step, by pasting it into the request URL field.\n    \n3. **Get your Postman API Key**: Create a new [Postman API Key](https://go.postman.co/settings/me/api-keys) and then open _Postman Vault_ (Accessed via the bottom right menu bar). Create a new _Postman Vault_ variable called `postman_api_key` and add your Postman API Key as the Value.  \n    Once the changes are saved, Postman will use the _Postman Vault_ variable to authorize your request as shown under the **Headers** tab of the request.\n    \n4. **Validate your solution**: Hit **Send** and look under the **Test Results** tab of the server response at the bottom to review your test results.\n    \n\nIf you have any failures, [review the failed test results](https://youtu.be/S3GKLTVRtmE) or ask for support in the [community forum](https://community.postman.com/). When all of your tests pass, move on to the next request in this folder."
+					},
+					"response": []
+				},
+				{
+					"name": "submit workspace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// counter for passed tests",
+									"let pass = 0",
+									"let totalToPass = 4",
+									"",
+									"let workspace = pm.response.json().workspace",
+									"",
+									"pm.test(\"If you have any failures, review the failed test results or ask for support in the community forum. Remember to save your changes if you update the collection. When all of your tests pass, you are done with today's challenge.\", () => {",
+									"    pm.expect(true);",
+									"    pass += 1",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"    pass += 1",
+									"});",
+									"",
+									"pm.test(\"Workspace has unique name\", () => {",
+									"    let name = workspace.name.toLowerCase()",
+									"    // pm.expect(workspace.name.toLowerCase()).to.not.contain.oneOf([\"15\",\"fifteen\",\"postman\",\"day\",\"challenge\",\"test\", \"testers\"])",
+									"    pm.expect(name).to.not.contain(\"15\")",
+									"    pm.expect(name).to.not.contain(\"fifteen\")",
+									"    pm.expect(name).to.not.contain(\"postman\")",
+									"    pm.expect(name).to.not.contain(\"day\")",
+									"    pm.expect(name).to.not.contain(\"challenge\")",
+									"    pm.expect(name).to.not.contain(\"test\")",
+									"    pm.expect(name).to.not.contain(\"testers\")",
+									"    pass += 1",
+									"})",
+									"",
+									"pm.test(\"Workspace is public\", () => {",
+									"    pm.expect(workspace.visibility).equals(\"public\")",
+									"    pass += 1",
+									"})",
+									"",
+									"// visualization for test results",
+									"let template",
+									"if (pass == totalToPass) {",
+									"    template = `🍪 passing!",
+									"        <br />",
+									"        <img src=\"https://media3.giphy.com/media/pHZdGyFNp5sUXq4jp5/giphy.gif?cid=ecf05e4742btni80eyov8aqcpjhvc4hyxc36covy0r33xvy0&rid=giphy.gif&ct=g\" />",
+									"    `",
+									"} else {",
+									"    template = `🙅 please try again",
+									"        <br />",
+									"        <img src=\"https://media3.giphy.com/media/W9gHkIonu8qXI7AC1y/giphy.gif?cid=ecf05e47mv96rgygl6w4fenzomwqqeh17p5pvcsgenuyxsbo&rid=giphy.gif&ct=g\" />",
+									"    `",
+									"}",
+									"pm.visualizer.set(template)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{vault:postman_api_key}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.getpostman.com/workspaces/{{workspace_id}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"getpostman",
+								"com"
+							],
+							"path": [
+								"workspaces",
+								"{{workspace_id}}"
+							]
+						},
+						"description": "It's time to check your workspace.\n\n1. **Get the workspace ID:** Select your workspace name in the sidebar. Then select the `Info` icon on the far right,, and copy the workspace `ID`.\n    \n2. **Update the request URL:** Update the `workspace_id` in the request URL with the `ID` from the previous step, using any method you prefer.\n    \n3. **Validate your solution**: Hit **Send** and look under the **Test Results** tab of the server response at the bottom to review your test results.\n    \n\nWhen all of your tests pass, you are done with today's challenge."
+					},
+					"response": []
+				}
+			],
+			"description": "Follow the instructions in the request documentation."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "collection_uid",
+			"value": "13924255-f7e18cae-57f4-4ebe-8609-be4ed40aab5d"
+		},
+		{
+			"key": "workspace_id",
+			"value": "2157b881-aff1-42b0-ad9e-0b273a1440a7"
+		}
+	]
+}
