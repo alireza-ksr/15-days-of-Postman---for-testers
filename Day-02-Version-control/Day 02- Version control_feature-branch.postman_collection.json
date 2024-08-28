@@ -1,0 +1,338 @@
+{
+	"info": {
+		"_postman_id": "50e8f75b-d5a5-4ac9-bdbe-0ecf6538b3f4",
+		"name": "Day 02: Version control",
+		"description": "## Instructions for Day 2: Version control\n\n1.  **Get the challenge:** Fork the parent collection to your own public workspace.\n2.  **Read the documentation:** Select the first folder. Expand the context bar on the right to follow the instructions in the collection documentation.\n3.  **Submit your solution:** Select the second folder and follow the instructions in the documentation to validate your solution.\n\n## Learning objectives\n- Configure request headers\n- Explain version control in Postman\n- Fork and merge changes into a collection\n- Use environment variables to store data\n\n## Concepts covered\n\n- [Fork a collection](https://learning.postman.com/docs/collaborating-in-postman/version-control-for-collections/#forking-a-collection)\n- [Send body data](https://learning.postman.com/docs/sending-requests/requests/#sending-body-data)\n- [Use environments](https://learning.postman.com/docs/sending-requests/managing-environments/#creating-environments)\n- [Configure request headers](https://learning.postman.com/docs/sending-requests/requests/#configuring-request-headers)\n    \n\n## Additional resources\n\n*   [Version Control for Collections](https://youtu.be/QKxukXJWRPI) video\n*   [How to use Postman environments](https://youtu.be/oCEDjp3XMco) video",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13924255",
+		"_collection_link": "https://www.postman.com/gold-escape-737985/workspace/2157b881-aff1-42b0-ad9e-0b273a1440a7/collection/13924255-50e8f75b-d5a5-4ac9-bdbe-0ecf6538b3f4?action=share&source=collection_link&creator=13924255"
+	},
+	"item": [
+		{
+			"name": "Version control",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n \"data\": \"noodles\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/post",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"post"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "It's time to work on your next challenge.\n\n1. **Fork the collection (again)**: Fork the collection (again) within your workspace and label the fork `feature-branch`, so that you have 2 collections in the same workspace. The next few steps are going to be completed in your `feature-branch` collection.\n    \n2. **Add a request**: In the `feature-branch` collection, add a request to the folder `Version control` called `New Request` with the following details:\n    \n    - `POST` method\n        \n    - `{{baseURL}}/post` request URL\n        \n3. **Include a body**: Under the **Body** tab, update the body type to `raw` and in the dropdown at the end where it says \"Text\", select `JSON`. Add a JSON object, like the following.\n    \n    ```\n      {\n      \"data\": \"noodles\"\n      }\n    \n     ```\n    \n    When you add a raw JSON request body, Postman auto-generates a header `Content-Type: application/json` header under the **Headers** tab. Take a look. You may need to click the **hidden** button to show the headers. This is also where you can [configure other request headers](https://learning.postman.com/docs/sending-requests/requests/#configuring-request-headers).\n    \n4. **Add an environment**: [Create a new environment](https://learning.postman.com/docs/sending-requests/managing-environments/#creating-environments) called `myEnvironment`, with a key `baseURL` and a value `https://postman-echo.com`. Then select the environment as the active environment, so that Postman reads in the appropriate value for `{{baseURL}}` in the request URL. **Send** to make sure you get a 200 status code, and then save your changes.\n    \n5. **Merge changes**: Since you are the author of both forks, you have permissions to merge any changes. If you did not have permission to edit the parent collection, you would instead submit a [pull request](https://learning.postman.com/docs/collaborating-in-postman/version-control-for-collections/#creating-pull-requests). Now [merge your changes](https://learning.postman.com/docs/collaborating-in-postman/version-control-for-collections/#merging-changes) from `feature-branch` into your own parent collection. Make sure to select the option \"Merge changes\". You will need the collection ID for both collections in the next step.\n    \n\nOnce you complete these steps, save your changes and move on to the next folder. Follow the instructions in the request documentation."
+		},
+		{
+			"name": "Submit your solution",
+			"item": [
+				{
+					"name": "submit first collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// counter for passed tests",
+									"let pass = 0",
+									"let totalToPass = 4",
+									"",
+									"let collection = pm.response.json().collection",
+									"",
+									"pm.test(\"If you have any failures, review the failed test results or ask for support in the community forum. Remember to save your changes if you update the collection. When all of your tests pass, you are done with today's challenge.\", () => {",
+									"    pm.expect(true);",
+									"    pass += 1",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"    pass += 1",
+									"});",
+									"",
+									"pm.test(\"Correct collection returned\", () => {",
+									"    pm.expect(collection.info.name).equals(\"Day 02: Version control\")",
+									"    pass += 1",
+									"})",
+									"",
+									"let folder = collection.item.find(fol => { return fol.name === \"Version control\" })",
+									"",
+									"pm.test(\"Request updated\", () => {",
+									"    let request = folder.item.find(req => { return req.name === \"New Request\" })",
+									"    pm.expect(request.request.method, 'check method').to.equal(\"POST\")",
+									"    pm.expect(request.request.body.options.raw.language, 'check JSON').to.equal(\"json\")",
+									"    pm.expect(request.request.body.raw, 'check payload').is.not.empty",
+									"    pass += 1",
+									"})",
+									"",
+									"// visualization for test results",
+									"let template",
+									"if (pass == totalToPass) {",
+									"    template = `🍪 passing!",
+									"        <br />",
+									"        <img src=\"https://media1.giphy.com/media/7Jplyo45Cd8Pp8A4PO/giphy.gif?cid=ecf05e4742btni80eyov8aqcpjhvc4hyxc36covy0r33xvy0&rid=giphy.gif&ct=g\" />",
+									"    `",
+									"} else {",
+									"    template = `🙅 please try again",
+									"        <br />",
+									"        <img src=\"https://media3.giphy.com/media/5bgS90uCmWoWp2hBvj/giphy.gif?cid=ecf05e47mv96rgygl6w4fenzomwqqeh17p5pvcsgenuyxsbo&rid=giphy.gif&ct=g\" />",
+									"    `",
+									"}",
+									"pm.visualizer.set(template)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{vault:postman_api_key}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.getpostman.com/collections/{{collection_uid}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"getpostman",
+								"com"
+							],
+							"path": [
+								"collections",
+								"{{collection_uid}}"
+							]
+						},
+						"description": "It's time to check your collection.\n\n1. **Get the collection ID:** Select the collection (the original parent) in the sidebar. Then in the context bar to the right, select the `Info` icon and copy the collection `ID`.\n    \n2. **Update the request URL:** Update the `collection_uid` in the request URL with the collection `ID` from the previous step, using any method you prefer.\n    \n3. **Get your Postman API Key**: Create a new [Postman API Key](https://go.postman.co/settings/me/api-keys) and then open _Postman Vault_ (Accessed via the bottom right menu bar). Create a new _Postman Vault_ variable called `postman_api_key` and add your Postman API Key as the Value. Once the changes are saved, Postman will use the _Postman Vault_ variable to authorize your request as shown under the **Headers** tab of the request.\n    \n4. **Validate your solution**: Hit **Send** and look under the **Test Results** tab of the server response at the bottom to review your test results.\n    \n\nIf you have any failures, [review the failed test results](https://youtu.be/S3GKLTVRtmE) or ask for support in the [community forum](https://community.postman.com/). When all of your tests pass, you are done with today's challenge."
+					},
+					"response": []
+				},
+				{
+					"name": "submit second collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// counter for passed tests",
+									"let pass = 0",
+									"let totalToPass = 5",
+									"",
+									"let collection = pm.response.json().collection",
+									"",
+									"pm.test(\"If you have any failures, review the failed test results or ask for support in the community forum. Remember to save your changes if you update the collection. When all of your tests pass, you are done with today's challenge.\", () => {",
+									"    pm.expect(true);",
+									"    pass += 1",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"    pass += 1",
+									"});",
+									"",
+									"pm.test(\"Correct collection returned\", () => {",
+									"    pm.expect(collection.info.name).equals(\"Day 02: Version control\")",
+									"    pass += 1",
+									"})",
+									"",
+									"pm.test(\"Correct fork returned\", () => {",
+									"    pm.expect(collection.info.fork.label).equals(\"feature-branch\")",
+									"    pass += 1",
+									"})",
+									"",
+									"let folder = collection.item.find(fol => {return fol.name === \"Version control\"})",
+									"",
+									"pm.test(\"Request updated\", () => {",
+									"    let request = folder.item.find(req => {return req.name === \"New Request\"})",
+									"    pm.expect(request.request.method, 'check method').to.equal(\"POST\")",
+									"    pm.expect(request.request.body.options.raw.language, 'check JSON').to.equal(\"json\")",
+									"    pm.expect(request.request.body.raw, 'check payload').is.not.empty",
+									"    pass += 1",
+									"})",
+									"",
+									"// visualization for test results",
+									"let template",
+									"if (pass == totalToPass) {",
+									"    template = `🍪 passing!",
+									"        <br />",
+									"        <img src=\"https://media0.giphy.com/media/TjGm3jg5sgV1mBmq8d/giphy.gif?cid=ecf05e4742btni80eyov8aqcpjhvc4hyxc36covy0r33xvy0&rid=giphy.gif&ct=g\" />",
+									"    `",
+									"} else {",
+									"    template = `🙅 please try again",
+									"        <br />",
+									"        <img src=\"https://media2.giphy.com/media/HSvpy6Jk396SI/giphy.gif?cid=ecf05e47mv96rgygl6w4fenzomwqqeh17p5pvcsgenuyxsbo&rid=giphy.gif&ct=g\" />",
+									"    `",
+									"}",
+									"pm.visualizer.set(template)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{vault:postman_api_key}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.getpostman.com/collections/{{collection_uid}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"getpostman",
+								"com"
+							],
+							"path": [
+								"collections",
+								"{{collection_uid}}"
+							]
+						},
+						"description": "Repeat the same steps to validate your second collection. You will need the collection `ID` for `feature-branch`.\n\nWhen all of your tests pass, move on to the last request in this folder."
+					},
+					"response": []
+				},
+				{
+					"name": "submit environment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// counter for passed tests",
+									"let pass = 0",
+									"let totalToPass = 4",
+									"",
+									"let env = pm.response.json().environment",
+									"",
+									"pm.test(\"If you have any failures, review the failed test results or ask for support in the community forum. Remember to save your changes if you update the collection. When all of your tests pass, you are done with today's challenge.\", () => {",
+									"    pm.expect(true);",
+									"    pass += 1",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"    pass += 1",
+									"});",
+									"",
+									"pm.test(\"Correct environment returned\", () => {",
+									"    pm.expect(env.name).equals(\"myEnvironment\")",
+									"    pass += 1",
+									"})",
+									"",
+									"pm.test(\"Correct variable added\", () => {",
+									"    let variable = env.values.find(key => {return key.key === \"baseURL\"})",
+									"    pm.expect(variable.value).equals(\"https://postman-echo.com\")",
+									"    pass += 1",
+									"})",
+									"",
+									"// visualization for test results",
+									"let template",
+									"if (pass == totalToPass) {",
+									"    template = `🍪 passing!",
+									"        <br />",
+									"        <img src=\"https://media1.giphy.com/media/LGvQYGvbG1HUTJvsqS/giphy.gif?cid=ecf05e47jecwb1ue3autu8zgn0xd3udt06orld5ohz3aenyi&rid=giphy.gif&ct=g\" />",
+									"    `",
+									"} else {",
+									"    template = `🙅 please try again",
+									"        <br />",
+									"        <img src=\"https://media1.giphy.com/media/11nQ2iZnQpPkgo/giphy.gif?cid=ecf05e47vtwsiob8kittbfq9lkkey2d8sxpafphia58eoanq&rid=giphy.gif&ct=g\" />",
+									"    `",
+									"}",
+									"pm.visualizer.set(template)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{vault:postman_api_key}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.getpostman.com/environments/{{environment_uid}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"getpostman",
+								"com"
+							],
+							"path": [
+								"environments",
+								"{{environment_uid}}"
+							]
+						},
+						"description": "Follow a similar process to validate your environment. You will need the environment `ID` for `myEnvironment` to update the `environment_uid` in the request URL.\n\nWhen all of your tests pass, you are done with today's challenge."
+					},
+					"response": []
+				}
+			],
+			"description": "Follow the instructions in the request documentation."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "collection_uid",
+			"value": "13924255-50e8f75b-d5a5-4ac9-bdbe-0ecf6538b3f4"
+		},
+		{
+			"key": "environment_uid",
+			"value": "13924255-7c51f356-f0cb-41ea-b914-d60efe215c21"
+		}
+	]
+}
