@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "df1914be-cf6c-40d6-8e8c-f426f2b5b2e4",
+		"name": "Day 03: Debugging",
+		"description": "## Instructions for Day 3: Debugging\n\n1.  **Get the challenge:** Fork the parent collection to your own public workspace.\n2.  **Read the documentation:** Select the first folder. Expand the context bar on the right to follow the instructions in the collection documentation.\n3.  **Submit your solution:** Select the second folder and follow the instructions in the documentation to validate your solution.\n    \n## Learning objectives\n- Inspect default console data\n- Log data to the console\n- Write a script\n\n## Concepts covered\n\n*   [Debug and log](https://learning.postman.com/docs/sending-requests/troubleshooting-api-requests/#debugging-and-logs)\n* [Script](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/)\n    \n\n## Additional resources\n\n*   [Debugging with the console](https://youtu.be/YCsURct9wCk) video\n*   [Powerful Debugging with the Postman Console](https://blog.postman.com/powerful-debugging-with-the-postman-console/) blog\n*   [How to use the Postman Console](https://www.postman.com/postman/workspace/postman-team-collections/collection/1559645-9349429e-3744-467b-a127-e3881f0dffc8?ctx=documentation) collection\n\n## Debugging resources\n- [Import a HAR file in Postman](https://youtu.be/E3uo-oQ9WtE) video\n- [Reverse engineering a private API](https://youtu.be/mAjvWZASyEI) video\n- [Capture API calls with a proxy](https://youtu.be/bjrCHUITZ3k) video",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13924255",
+		"_collection_link": "https://www.postman.com/gold-escape-737985/workspace/alireza-kasiri/collection/13924255-df1914be-cf6c-40d6-8e8c-f426f2b5b2e4?action=share&source=collection_link&creator=13924255"
+	},
+	"item": [
+		{
+			"name": "Debugging",
+			"item": [
+				{
+					"name": "Rick and Morty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let characters = pm.response.json().results\r",
+									"characters.forEach(character => console.log(character.name))"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://rickandmortyapi.com/api/character",
+							"protocol": "https",
+							"host": [
+								"rickandmortyapi",
+								"com"
+							],
+							"path": [
+								"api",
+								"character"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "It's time to work on your next challenge.\n\nThe [Postman console](https://learning.postman.com/docs/sending-requests/troubleshooting-api-requests/#debugging-and-logs) gives you visibility for debugging during development. Let's check out the [Rick and Morty API](https://rickandmortyapi.com/documentation/) from the television show to learn more about debugging API calls in Postman.\n\n1. **Add a request**: Add a request called `Rick and Morty` to the folder `Debugging` with the following details.\n    \n    - `GET` method\n        \n    - `https://rickandmortyapi.com/api` request URL  \n        Open the Postman console in the bottom left. Send the request and inspect the various parts of the network call (e.g. Network, Request Headers, Response Headers, Response Body).\n        \n2. **Edit the request**: Based on the response body from the previous step, update the request URL to retrieve all the characters from this television show.\n    \n3. **Add a log statement**: Under the **Scripts > Post-response** tab of the request, add a `console.log()` function to output the name of each character to the Postman console.\n    \n\n``` javascript\nlet characters = pm.response.json().results\ncharacters.forEach(character => console.log(character.name))\n\n ```\n\n**Send** the request again, and inspect the output in the console. This allows you to parse a response quickly while in development, instead of browsing through the entire payload.  \n4\\. **Other log statements**: Using console statements like `console.log()`, `console.info()`, `console.warn()`, and `console.error()` in either the **Pre-request Scripts** or **Tests** tabs lets you track request executions, exceptions, and errors during development. Feel free to add more log statements, perhaps conditionally, to provide more insights in what is being returned from the server.\n\nOnce you complete these steps, move on to the next folder in this collection to submit your solution. Follow the instructions in the request documentation."
+		},
+		{
+			"name": "Submit your solution",
+			"item": [
+				{
+					"name": "submit collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// counter for passed tests",
+									"let pass = 0",
+									"let totalToPass = 5",
+									"",
+									"let collection = pm.response.json().collection",
+									"",
+									"pm.test(\"If you have any failures, review the failed test results or ask for support in the community forum. Remember to save your changes if you update the collection. When all of your tests pass, you are done with today's challenge.\", () => {",
+									"    pm.expect(true);",
+									"    pass += 1",
+									"});",
+									"",
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"    pass += 1",
+									"});",
+									"",
+									"pm.test(\"Correct collection returned\", () => {",
+									"    pm.expect(collection.info.name).equals(\"Day 03: Debugging\")",
+									"    pass += 1",
+									"})",
+									"",
+									"let folder = collection.item.find(fol => {return fol.name === \"Debugging\"})",
+									"let addedRequest = collection.item[0].item.find(req => { return req.name === \"Rick and Morty\"})",
+									"",
+									"pm.test(\"Request added correctly\", () => {",
+									"    pm.expect(collection.item[0].item.length, 'check number of requests').equals(1)",
+									"    pm.expect(addedRequest.name, 'check name').equals(\"Rick and Morty\")",
+									"",
+									"    pass += 1",
+									"})",
+									"",
+									"pm.test(\"Script added\", () => {",
+									"    pm.expect(addedRequest.event[0].script.exec.toString(), 'check script').includes(\"console.log\")",
+									"    ",
+									"    pass += 1",
+									"})",
+									"",
+									"// visualization for test results",
+									"let template",
+									"if (pass == totalToPass) {",
+									"    template = `🍪 passing!",
+									"        <br />",
+									"        <img src=\"https://media1.giphy.com/media/EQRgN1hTnd7RC/giphy.gif?cid=ecf05e47lvx92q279p7w07terp7lx1f7hfm9und0vcepp0s4&rid=giphy.gif&ct=g\" />",
+									"    `",
+									"} else {",
+									"    template = `🙅 please try again",
+									"        <br />",
+									"        <img src=\"https://media1.giphy.com/media/tuQXxbPB2SEIiJeBkj/giphy.gif?cid=ecf05e47vtwsiob8kittbfq9lkkey2d8sxpafphia58eoanq&rid=giphy.gif&ct=g\" />",
+									"    `",
+									"}",
+									"pm.visualizer.set(template)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "{{vault:postman_api_key}}"
+							}
+						],
+						"url": {
+							"raw": "https://api.getpostman.com/collections/{{collection_uid}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"getpostman",
+								"com"
+							],
+							"path": [
+								"collections",
+								"{{collection_uid}}"
+							]
+						},
+						"description": "It's time to check your collection.\n\n1. **Get the collection ID:** Select the collection in the sidebar. Then in the context bar to the right, select the `Info` icon and copy the collection `ID`.\n    \n2. **Update the request URL:** Update the `collection_uid` in the request URL with the collection `ID` from the previous step, using any method you prefer.\n    \n3. **Get your Postman API Key**: Create a new [Postman API Key](https://go.postman.co/settings/me/api-keys) and then open _Postman Vault_ (Accessed via the bottom right menu bar). Create a new _Postman Vault_ variable called `postman_api_key` and add your Postman API Key as the Value.  \n    Once the changes are saved, Postman will use the _Postman Vault_ variable to authorize your request as shown under the **Headers** tab of the request.\n    \n4. **Validate your solution**: Hit **Send** and look under the **Test Results** tab of the server response at the bottom to review your test results.\n    \n\nIf you have any failures, [review the failed test results](https://youtu.be/S3GKLTVRtmE) or ask for support in the [community forum](https://community.postman.com/). When all of your tests pass, you are done with today's challenge."
+					},
+					"response": []
+				}
+			],
+			"description": "Follow the instructions in the request documentation."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "collection_uid",
+			"value": "13924255-df1914be-cf6c-40d6-8e8c-f426f2b5b2e4"
+		}
+	]
+}
